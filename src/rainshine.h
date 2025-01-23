@@ -9,4 +9,6 @@
 
 #include "interact.h"
 
+void fetchKeyAndLocation(char** apiKey, char** location);
+
 #endif
