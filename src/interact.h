@@ -6,7 +6,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <limits.h>
+#include <curl/curl.h>
 
-void today(void);
+void buildUrl(char* apiKey, char* location, char* outputUrl);
+void today(char* apiKey, char* location);
 
 #endif
