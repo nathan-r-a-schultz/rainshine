@@ -87,5 +87,10 @@ echo "export RAINSHINE_LOCATION=$LOCATION" >> "$HOME/.bashrc"
 # update the shell
 source "$HOME/.bashrc"
 
+# clean up compiled object files
+rm rainshine
+rm rainshine.o
+rm interact.o
+
 # inform user of a completed installation
 echo "Installation complete. You may need to run 'source ~/.bashrc' manually to apply changes."
