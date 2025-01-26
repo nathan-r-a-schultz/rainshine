@@ -4,10 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <limits.h>
 #include <curl/curl.h>
 
+size_t callback(char *data, size_t size, size_t nmemb, void *clientp);
 void buildUrl(char* apiKey, char* location, char* outputUrl);
 void today(char* apiKey, char* location);
 
