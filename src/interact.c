@@ -76,7 +76,3 @@ char* apiCall(char *apiKey, char *location) {
     return response;
 
 }
-
-void today(char* response) {
-    printf("Response: %s\n", response);
-}

@@ -1,2 +1,2 @@
-rainshine: rainshine.o interact.o
-	@gcc -o rainshine rainshine.o interact.o -lcurl
+rainshine: rainshine.o interact.o jsonhandler.o
+	@gcc -o rainshine rainshine.o interact.o jsonhandler.o -lcurl -lcjson

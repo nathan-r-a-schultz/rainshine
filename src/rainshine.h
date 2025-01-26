@@ -8,6 +8,7 @@
 #include <time.h>
 
 #include "interact.h"
+#include "jsonhandler.h"
 
 void fetchKeyAndLocation(char** apiKey, char** location);
 
