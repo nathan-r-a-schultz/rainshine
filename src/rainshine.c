@@ -1,10 +1,13 @@
 #include "rainshine.h"
 
+// gets the key and location from the environments
 void fetchKeyAndLocation(char** apiKey, char** location) {
     
+    // get env vars
     *apiKey = getenv("RAINSHINE_API_KEY");
     *location = getenv("RAINSHINE_LOCATION");
 
+    // perform error checking
     if (*apiKey == NULL) {
         fprintf(stderr, "Missing API key.");
         exit(1);
@@ -20,6 +23,7 @@ void fetchKeyAndLocation(char** apiKey, char** location) {
 
 }
 
+// the main function.... handles command line arguments
 int main (int argc, char *argv[]) {
 
     char *apiKey, *location;

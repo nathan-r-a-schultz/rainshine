@@ -1,5 +1,6 @@
 #include "interact.h"
 
+// create memory object
 struct memory {
   char *response;
   size_t size;
@@ -25,12 +26,13 @@ size_t callback(char *data, size_t size, size_t nmemb, void *clientp) {
     return realsize;
 }
 
+// build the url to make the api call
 void buildUrl(char *apiKey, char *location, char *outputUrl) {
 
-    // Empty the buffer
+    // empty the buffer
     outputUrl[0] = '\0';
 
-    // Concatenate the url together
+    // concatenate the url together
     strcat(outputUrl, "http://api.weatherapi.com/v1/current.json?key=");
     strcat(outputUrl, apiKey);
     strcat(outputUrl, "&q=");
@@ -39,26 +41,30 @@ void buildUrl(char *apiKey, char *location, char *outputUrl) {
 
 }
 
+// perform a call to weatherapi.com
 char* apiCall(char *apiKey, char *location) {
 
+    // create and build url
     char url[150];
     buildUrl(apiKey, location, url);
 
+    // create a memory chunk and init curl
     struct memory chunk = {0};
     CURLcode res;
     CURL *curl = curl_easy_init();
-
     char *response = NULL;
 
     if (curl) {
 
+        // set up the curl calls
         curl_easy_setopt(curl, CURLOPT_URL, url);
-
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, callback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&chunk);
 
+        // perform the curl call
         res = curl_easy_perform(curl);
 
+        // check if the response is okay
         if (res == CURLE_OK && chunk.response) {
             response = strdup(chunk.response);
         } else {
@@ -66,6 +72,7 @@ char* apiCall(char *apiKey, char *location) {
 
         }
 
+        // free up the allocated memory and clean up curl
         free(chunk.response);
         curl_easy_cleanup(curl);
     }
