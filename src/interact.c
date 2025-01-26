@@ -39,7 +39,7 @@ void buildUrl(char *apiKey, char *location, char *outputUrl) {
 
 }
 
-void today(char *apiKey, char *location) {
+char* apiCall(char *apiKey, char *location) {
 
     char url[150];
     buildUrl(apiKey, location, url);
@@ -47,6 +47,8 @@ void today(char *apiKey, char *location) {
     struct memory chunk = {0};
     CURLcode res;
     CURL *curl = curl_easy_init();
+
+    char *response = NULL;
 
     if (curl) {
 
@@ -57,10 +59,11 @@ void today(char *apiKey, char *location) {
 
         res = curl_easy_perform(curl);
 
-        if (res == CURLE_OK) {
-            printf("API response: %s\n", chunk.response);
+        if (res == CURLE_OK && chunk.response) {
+            response = strdup(chunk.response);
         } else {
             fprintf(stderr, "Request failed: %s\n", curl_easy_strerror(res));
+
         }
 
         free(chunk.response);
@@ -70,4 +73,10 @@ void today(char *apiKey, char *location) {
         printf("Failure to initialise cURL. Request aborted.");
     }
 
+    return response;
+
+}
+
+void today(char* response) {
+    printf("Response: %s\n", response);
 }
