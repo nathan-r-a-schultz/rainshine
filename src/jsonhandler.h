@@ -6,6 +6,6 @@
 #include <stdlib.h>
 #include <cjson/cJSON.h>
 
-void today(char* jsonStr);
+void now(char* jsonStr);
 
 #endif

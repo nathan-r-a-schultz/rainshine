@@ -31,9 +31,9 @@ int main (int argc, char *argv[]) {
     fetchKeyAndLocation(&apiKey, &location);
 
     if (argc > 1) {
-        if (strcmp(argv[1], "today") == 0) {
+        if (strcmp(argv[1], "now") == 0) {
             char* response = apiCall(apiKey, location);
-            today(response);
+            now(response);
         }
         if (strcmp(argv[1], "envinfo") == 0) {
             printf("API key: %s\n", apiKey);
