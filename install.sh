@@ -20,6 +20,7 @@ configEnvVars() {
         2)
             echo "Option [2] selected"
             read -p "Enter your Canada Postalcode (do not use spaces): " LOCATION
+            LOCATION="${LOCATION:0:3}+${LOCATION:3:3}"
         ;;
 
         3)
@@ -77,6 +78,15 @@ if ! cp rainshine "$INSTALL_DIR/"; then
     echo "Failed to copy executable to $INSTALL_DIR"
     exit 1
 fi
+
+# enter scripts directory and copy required scripts
+cd scripts
+if ! cp rainshinechangekey.sh rainshinechangelocation.sh "$INSTALL_DIR/"; then
+    echo "Failed to copy scripts to $INSTALL_DIR"
+    exit 1
+fi
+
+cd ..
 
 # copy the executable to the path
 if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then

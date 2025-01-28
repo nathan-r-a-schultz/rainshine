@@ -35,9 +35,17 @@ int main (int argc, char *argv[]) {
             char* response = apiCall(apiKey, location);
             now(response);
         }
-        if (strcmp(argv[1], "envinfo") == 0) {
+        else if (strcmp(argv[1], "envinfo") == 0) {
             printf("API key: %s\n", apiKey);
             printf("Location: %s\n", location);
+        }
+        else if (strcmp(argv[1], "change") == 0) {
+            if (strcmp(argv[2], "key") == 0) {
+                system("~/.local/bin/rainshinechangekey.sh");
+            }
+            else if (strcmp(argv[2], "location") == 0) {
+                system("~/.local/bin/rainshinechangelocation.sh");
+            }
         }
     }
 
