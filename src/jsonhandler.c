@@ -1,7 +1,7 @@
 #include "jsonhandler.h"
 
 // basic template for future outputs
-void now(char* jsonStr) {
+void current(char* jsonStr) {
 
     // parse the string into json
     cJSON *json = cJSON_Parse(jsonStr);
@@ -53,4 +53,26 @@ void now(char* jsonStr) {
 
     // Clean up memory
     cJSON_Delete(json);
+}
+
+void forecast(char* jsonStr) {
+    /* 
+       NOTE: i think i've already decided to somewhat scrap the outline below but i'm keeping it in the code for now in case i change my mind and decide to use it
+
+       the forecast command will be executed as outlined below:
+
+       using "rainshine forecast 2" will give the forecast two days from now
+       using "rainshine forecast 2 -d" will give the forecast two days from now
+       using "rainshine forecast 2 -h" will give the forecast two hours from now
+
+       using "rainshine forecast 2:4" will give the forecast for two and three days from now, but not four
+       using "rainshine forecast 2:4 -d" will give the forecast for two and three days from now, but not four
+       using "rainshine forecast 2:4 -h" will give the forecast for two and three hours from now, but not four
+
+       the -d flag will be the default, which technically means the -d flag is redundant... but i'm going to keep it anyway. viewing hours will require -h.
+
+    */
+
+    printf(jsonStr);
+
 }

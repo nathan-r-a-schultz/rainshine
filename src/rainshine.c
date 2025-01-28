@@ -23,17 +23,22 @@ void fetchKeyAndLocation(char** apiKey, char** location) {
 
 }
 
-// the main function.... handles command line arguments
+// the main function handles command line arguments
 int main (int argc, char *argv[]) {
 
+    // get env vars
     char *apiKey, *location;
-
     fetchKeyAndLocation(&apiKey, &location);
 
+    // this if statement will be super long eventually. gotta find a way to handle it more efficiently
     if (argc > 1) {
-        if (strcmp(argv[1], "now") == 0) {
-            char* response = apiCall(apiKey, location);
-            now(response);
+        if (strcmp(argv[1], "current") == 0) {
+            char* response = apiCall(apiKey, location, 1, 0);
+            current(response);
+        }
+        else if (strcmp(argv[1], "forecast") == 0) {
+            char* response = apiCall(apiKey, location, 2, atoi(argv[2]));
+            forecast(response);
         }
         else if (strcmp(argv[1], "envinfo") == 0) {
             printf("API key: %s\n", apiKey);
