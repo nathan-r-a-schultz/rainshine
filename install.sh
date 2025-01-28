@@ -86,6 +86,8 @@ if ! cp rainshinechangekey.sh rainshinechangelocation.sh "$INSTALL_DIR/"; then
     exit 1
 fi
 
+# allow for execution of the scripts
+chmod +x "$INSTALL_DIR/rainshinechangekey.sh" "$INSTALL_DIR/rainshinechangelocation.sh"
 cd ..
 
 # copy the executable to the path
