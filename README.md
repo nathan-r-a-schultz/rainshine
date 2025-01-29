@@ -17,6 +17,6 @@ All commands are in the form ```rainshine [option...]```. Options are listed bel
 | Command               | Output  |
 | :-------------------  | :------ |
 | current               | Gets current weather conditions     |
-| forecast [int]        | Retrieves the forecast for the next number of days specified. This feature is still a work in progress.    |
+| forecast [int]        | Retrieves the forecast for the next number of days specified    |
 | envinfo               | Retrieves your API key and location     |
-| change [string] | Allows the user to change either their location or their API key, specified by the using the string "location" or "key".
+| change [string] | Allows the user to change either their location or their API key, specified by the using the string "location" or "key" |

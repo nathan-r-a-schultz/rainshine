@@ -51,6 +51,17 @@ int main (int argc, char *argv[]) {
             else if (strcmp(argv[2], "location") == 0) {
                 system("~/.local/bin/rainshinechangelocation.sh");
             }
+            else {
+                printf("Improper usage of 'rainshine change'. To change your location, use 'rainshine change location.'. To change your API key, use 'rainshine change key.");
+            }
+        }
+        else if (strcmp(argv[1], "help") == 0 || strcmp(argv[1], "h") == 0 || strcmp(argv[1], "-h") == 0) {
+            printf("List of commands:\n");
+            printf("current: Gets current weather conditions\n");
+            printf("forecast [int]: Retrieves the forecast for the next number of days specified\n");
+            printf("envinfo: Retrieves your API key and location\n");
+            printf("change [string]: Allows the user to change either their location or their API key, specified by the using the string \"location\" or \"key\"\n");
+            printf("help: Prints out all available commands\n");
         }
     }
 
