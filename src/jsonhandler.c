@@ -73,6 +73,63 @@ void forecast(char* jsonStr) {
 
     */
 
-    printf(jsonStr);
+    // parse the string into json
+    cJSON *json = cJSON_Parse(jsonStr);
+
+    // handle json parsing related errors
+    if (json == NULL) {
+        printf("Error parsing JSON\n");
+        return;
+    }
+
+    // get the appropriate json key
+    cJSON *forecast = cJSON_GetObjectItemCaseSensitive(json, "forecast");
+    if (!cJSON_IsObject(forecast)) {
+        printf("Error: 'forecast' object not found\n");
+        cJSON_Delete(json);
+        return;
+    }
+
+    cJSON *forecastday = cJSON_GetObjectItemCaseSensitive(forecast, "forecastday");
+    if (!cJSON_IsArray(forecastday)) {
+        printf("No forecast day array found.\n");
+        cJSON_Delete(json);
+        return;
+    }
+
+    // get day and create an array for each day
+    cJSON *day;
+    cJSON_ArrayForEach(day, forecastday) {
+
+        // create a date object and print it
+        cJSON *date = cJSON_GetObjectItemCaseSensitive(day, "date");
+        printf("\nDate: %s\n", date->valuestring);
+
+        // make an array for the hours
+        cJSON *hour_array = cJSON_GetObjectItemCaseSensitive(day, "hour");
+        if (!cJSON_IsArray(hour_array)) {
+            printf("No hourly forecast data available.\n");
+            continue;
+        }
+
+        // create each hour in the array
+        cJSON *hour;
+        cJSON_ArrayForEach(hour, hour_array) {
+
+            // get info for that hour
+            cJSON *time = cJSON_GetObjectItemCaseSensitive(hour, "time");
+            cJSON *temp_c = cJSON_GetObjectItemCaseSensitive(hour, "temp_c");
+            cJSON *condition = cJSON_GetObjectItemCaseSensitive(hour, "condition");
+            cJSON *condition_text = condition ? cJSON_GetObjectItemCaseSensitive(condition, "text") : NULL;
+
+            // print the info out
+            printf("Time: %s, Temperature: %.1f°C, Condition: %s\n",
+                   time ? time->valuestring : "Unknown",
+                   temp_c ? temp_c->valuedouble : 0.0,
+                   condition_text ? condition_text->valuestring : "Unknown");
+        }
+    }
+
+    cJSON_Delete(json);
 
 }

@@ -32,14 +32,14 @@ void buildUrl(char *apiKey, char *location, char *outputUrl, int callType, int n
     /*
       how the url is built based on call types:
       - callType 1: build the call for current weather
-      - callType 2: build the call for days
+      - callType 2: build the call for forecasts
     */
 
     // empty the buffer
     outputUrl[0] = '\0';
 
     // concatenate the url together
-    strcat(outputUrl, "http://api.weatherapi.com/v1/current");
+    strcat(outputUrl, "http://api.weatherapi.com/v1/");
 
     switch (callType) {
         case 1:
