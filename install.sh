@@ -3,9 +3,17 @@
 # the environment config function
 configEnvVars() {
 
-    # get the user's API key and location
+    # get the user's API key, units, and location
     echo "Please enter your weatherapi.com API key (input is hidden):"
     read -sp "API Key: " API_KEY
+
+    # ensure the right input is used for inputs
+    read -p "Would you like to use metric measurements or imperial measurements? [m/i]" UNITS
+    if [[ "$UNITS" != [mMiI] ]]; then
+        echo "Invalid inputs. Program aborted."
+        exit 1
+    fi
+
     echo -e "\nThe following formats for locations are valid:\n[1] US Zipcode\n[2] Canada Postalcode\n[3] IP Address\n[4] Latitude/Longitude (decimal degree)\n[5] City name (not recommended for small towns or cities with common names)\n"
     read -p "Enter your option [1,2,3,4,5]: " FORMAT_SELECTION
 
@@ -55,6 +63,7 @@ configEnvVars() {
     # write as env variables
     echo "export RAINSHINE_API_KEY=$API_KEY" >> "$HOME/.bashrc"
     echo "export RAINSHINE_LOCATION=$LOCATION" >> "$HOME/.bashrc"
+    echo "export RAINSHINE_UNITS=$UNITS" >> "$HOME/.bashrc"
 }
 
 cd "$(dirname "$0")/src" || exit 1
