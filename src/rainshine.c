@@ -25,7 +25,7 @@ void fetchKeyAndLocation(char** apiKey, char** location) {
 
 // gets metric/imperial units
 bool fetchUnits(void) {
-    char units = getenv("RAINSHINE_UNITS");
+    char *units = getenv("RAINSHINE_UNITS");
 
     if ((strcmp(units, "M") == 0) || (strcmp(units, "m") == 0)) {
         return true; // true represents metric
@@ -57,10 +57,10 @@ int main (int argc, char *argv[]) {
             printf("API key: %s\n", apiKey);
             printf("Location: %s\n", location);
             if (units == true) {
-                printf("Units: metric");
+                printf("Units: metric\n");
             }
             else {
-                printf("Units: imperial");
+                printf("Units: imperial\n");
             }
         }
         else if (strcmp(argv[1], "change") == 0) {
