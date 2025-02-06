@@ -27,12 +27,18 @@ void fetchKeyAndLocation(char** apiKey, char** location) {
 bool fetchUnits(void) {
     char *units = getenv("RAINSHINE_UNITS");
 
+    if (units == NULL) {
+        return true;  // default to metric if not set
+    }
+
     if ((strcmp(units, "M") == 0) || (strcmp(units, "m") == 0)) {
         return true; // true represents metric
     }
     else if ((strcmp(units, "I") == 0) || (strcmp(units, "i") == 0)) {
         return false; // false represents imperial
     }
+
+    return true; // default to metric
 }
 
 // the main function handles command line arguments
@@ -47,7 +53,7 @@ int main (int argc, char *argv[]) {
     if (argc > 1) {
         if (strcmp(argv[1], "current") == 0) {
             char* response = apiCall(apiKey, location, 1, 0);
-            current(response);
+            current(response, units);
         }
         else if (strcmp(argv[1], "forecast") == 0) {
             char* response = apiCall(apiKey, location, 2, atoi(argv[2]));
@@ -59,8 +65,11 @@ int main (int argc, char *argv[]) {
             if (units == true) {
                 printf("Units: metric\n");
             }
-            else {
+            else if (units == false) {
                 printf("Units: imperial\n");
+            }
+            else {
+                printf("Unit failure\n");
             }
         }
         else if (strcmp(argv[1], "change") == 0) {

@@ -1,7 +1,11 @@
 #include "jsonhandler.h"
 
 // basic template for future outputs
-void current(char* jsonStr) {
+void current(char* jsonStr, bool units) {
+
+    // init some vars related to metric/imperial units
+    char *tempParam, *feelsLikeParam;
+    char unitType;
 
     // parse the string into json
     cJSON *json = cJSON_Parse(jsonStr);
@@ -20,9 +24,31 @@ void current(char* jsonStr) {
         return;
     }
 
+    // check what type of units to use (true is metric, false is imperial)
+    if (units == true) {
+        tempParam = "temp_c";
+        feelsLikeParam = "feelsLike_c";
+        unitType = 'C';
+    }
+    else if (units == false) {
+        tempParam = "temp_f";
+        feelsLikeParam = "feelsLike_f";
+        unitType = 'F';
+    }
+    else {
+
+        // // gotta set these to null otherwise the compiler will scream at me
+        // *tempParam = NULL;
+        // *feelsLikeParam = NULL;
+        // unitType = '\0';
+
+        printf("Unit error");
+        exit(1);
+    }
+
     // get relevant weather info
-    cJSON *temperature = cJSON_GetObjectItemCaseSensitive(current, "temp_c");
-    cJSON *feelsLike = cJSON_GetObjectItemCaseSensitive(current, "feelslike_c");
+    cJSON *temperature = cJSON_GetObjectItemCaseSensitive(current, tempParam);
+    cJSON *feelsLike = cJSON_GetObjectItemCaseSensitive(current, feelsLikeParam);
     cJSON *precipitation = cJSON_GetObjectItemCaseSensitive(current, "precip_mm");
     cJSON *uv = cJSON_GetObjectItemCaseSensitive(current, "uv");
     cJSON *condition = cJSON_GetObjectItemCaseSensitive(current, "condition");
@@ -38,18 +64,13 @@ void current(char* jsonStr) {
         // print info
         printf("Current weather conditions:\n");
         printf("Sky conditions: %s\n", skyConditions->valuestring);
-        printf("Temperature: %.1f°C\n", temperature->valuedouble);
-        printf("Feels like: %.1f°C\n", feelsLike->valuedouble);
+        printf("Temperature: %.1f°%c\n", temperature->valuedouble, unitType);
+        printf("Feels like: %.1f°%c\n", feelsLike->valuedouble, unitType);
         printf("Precipitation: %.1fmm\n", precipitation->valuedouble);
         printf("UV: %.1f\n", uv->valuedouble);
     } else {
         printf("Error: one or more JSON key/value could not be parsed.\n");
     }
-
-    // writing this here so I don't forget it: [TODO] add support for imperial units
-    // probably easiest to ask the user if they prefer metric or imperial during the setup script...
-    // ...and instead of having to have different cases for parsing JSON based on metric or imperial...
-    // ...I can instead just always parse metric and only convert to imperial if the user has set their preference to imperial
 
     // Clean up memory
     cJSON_Delete(json);

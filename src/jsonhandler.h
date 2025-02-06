@@ -7,7 +7,7 @@
 #include <stdbool.h>
 #include <cjson/cJSON.h>
 
-void current(char* jsonStr);
+void current(char* jsonStr, bool units);
 void forecast(char* jsonStr);
 
 #endif
