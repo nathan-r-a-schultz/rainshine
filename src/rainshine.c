@@ -23,11 +23,24 @@ void fetchKeyAndLocation(char** apiKey, char** location) {
 
 }
 
+// gets metric/imperial units
+bool fetchUnits(void) {
+    char units = getenv("RAINSHINE_UNITS");
+
+    if ((strcmp(units, "M") == 0) || (strcmp(units, "m") == 0)) {
+        return true; // true represents metric
+    }
+    else if ((strcmp(units, "I") == 0) || (strcmp(units, "i") == 0)) {
+        return false; // false represents imperial
+    }
+}
+
 // the main function handles command line arguments
 int main (int argc, char *argv[]) {
 
     // get env vars
     char *apiKey, *location;
+    bool units = fetchUnits();
     fetchKeyAndLocation(&apiKey, &location);
 
     // this if statement will be super long eventually. gotta find a way to handle it more efficiently
@@ -43,6 +56,12 @@ int main (int argc, char *argv[]) {
         else if (strcmp(argv[1], "envinfo") == 0) {
             printf("API key: %s\n", apiKey);
             printf("Location: %s\n", location);
+            if (units == true) {
+                printf("Units: metric");
+            }
+            else {
+                printf("Units: imperial");
+            }
         }
         else if (strcmp(argv[1], "change") == 0) {
             if (strcmp(argv[2], "key") == 0) {
