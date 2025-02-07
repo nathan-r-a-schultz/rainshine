@@ -8,7 +8,7 @@ configEnvVars() {
     read -sp "API Key: " API_KEY
 
     # ensure the right input is used for inputs
-    read -p "Would you like to use metric measurements or imperial measurements? [m/i]" UNITS
+    read -p "Would you like to use metric measurements or imperial measurements? [m/i]: " UNITS
     if [[ "$UNITS" != [mMiI] ]]; then
         echo "Invalid inputs. Program aborted."
         exit 1
@@ -90,13 +90,13 @@ fi
 
 # enter scripts directory and copy required scripts
 cd scripts
-if ! cp rainshinechangekey.sh rainshinechangelocation.sh "$INSTALL_DIR/"; then
+if ! cp rainshinechangekey.sh rainshinechangelocation.sh rainshinechangeunits.sh "$INSTALL_DIR/"; then
     echo "Failed to copy scripts to $INSTALL_DIR"
     exit 1
 fi
 
 # allow for execution of the scripts
-chmod +x "$INSTALL_DIR/rainshinechangekey.sh" "$INSTALL_DIR/rainshinechangelocation.sh"
+chmod +x "$INSTALL_DIR/rainshinechangekey.sh" "$INSTALL_DIR/rainshinechangelocation.sh" "$INSTALL_DIR/rainshinechangeunits.sh"
 cd ..
 
 # copy the executable to the path
@@ -123,7 +123,7 @@ if [[ $(grep -q "RAINSHINE_API_KEY" ~/.bashrc && grep -q "RAINSHINE_LOCATION" ~/
         echo "Using existing environment variables."
     else
         echo "Proceeding without using the existing variables."
-        awk '!/RAINSHINE_API_KEY/ && !/RAINSHINE_LOCATION/' ~/.bashrc > ~/.bashrc.tmp && mv ~/.bashrc.tmp ~/.bashrc # remove old environment variables to prevent clogging ~/.bashrc
+        awk '!/RAINSHINE_API_KEY/ && !/RAINSHINE_LOCATION/ && !/RAINSHINE_UNITS/' ~/.bashrc > ~/.bashrc.tmp && mv ~/.bashrc.tmp ~/.bashrc # remove old environment variables to prevent clogging ~/.bashrc
         configEnvVars # configure the environment variables manually
     fi
 
