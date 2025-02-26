@@ -37,11 +37,6 @@ void current(char* jsonStr, bool units) {
     }
     else {
 
-        // // gotta set these to null otherwise the compiler will scream at me
-        // *tempParam = NULL;
-        // *feelsLikeParam = NULL;
-        // unitType = '\0';
-
         printf("Unit error");
         exit(1);
     }
@@ -76,7 +71,7 @@ void current(char* jsonStr, bool units) {
     cJSON_Delete(json);
 }
 
-void forecast(char* jsonStr) {
+void forecast(char* jsonStr, bool units) {
     /* 
        NOTE: i think i've already decided to somewhat scrap the outline below but i'm keeping it in the code for now in case i change my mind and decide to use it
 
@@ -139,14 +134,23 @@ void forecast(char* jsonStr) {
 
             // get info for that hour
             cJSON *time = cJSON_GetObjectItemCaseSensitive(hour, "time");
-            cJSON *temp_c = cJSON_GetObjectItemCaseSensitive(hour, "temp_c");
             cJSON *condition = cJSON_GetObjectItemCaseSensitive(hour, "condition");
             cJSON *condition_text = condition ? cJSON_GetObjectItemCaseSensitive(condition, "text") : NULL;
+
+            if (units == true) {
+                cJSON *temp = cJSON_GetObjectItemCaseSensitive(hour, "temp_c");
+            }
+            else if (units == false) {
+                cJSON *temp = cJSON_GetObjectItemCaseSensitive(hour, "temp_f");
+            }
+            else {
+
+            }
 
             // print the info out
             printf("Time: %s, Temperature: %.1f°C, Condition: %s\n",
                    time ? time->valuestring : "Unknown",
-                   temp_c ? temp_c->valuedouble : 0.0,
+                   temp? temp->valuedouble : 0.0,
                    condition_text ? condition_text->valuestring : "Unknown");
         }
     }
