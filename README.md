@@ -1,10 +1,10 @@
 # RainShine
 
-RainShine is a work in progress command line tool for Linux. Its purpose is to easily fetch weather data and allow the user to view up-to-date forecasts in their terminal.
+RainShine is a command line tool for Linux. Its purpose is to easily fetch weather data and allow the user to view up-to-date forecasts in their terminal.
 
 ## Compatibility
 
-As of right now, only Linux is officially supported. Development for RainShine has been conducted on Arch Linux (btw). RainShine does not rely on any distro specific features, so it should support all modern Linux distros. Once RainShine is more complete, other distros will be tested more thoroughly.
+As of right now, only Linux is officially supported. Development for RainShine has been conducted on Arch Linux, but RainShine should be compatible with all modern Linux distributions.
 
 ## Installation
 
@@ -19,5 +19,5 @@ All commands are in the form ```rainshine [option...]```. Options are listed bel
 | current               | Gets current weather conditions     |
 | forecast [int]        | Retrieves the forecast for the next number of days specified    |
 | envinfo               | Retrieves your API key and location     |
-| change [string]       | Allows the user to change either their location or their API key, specified by the using the string "location" or "key" |
+| change [string]       | Allows the user to change either their location, their API key, or their units. Specified by the using the string "location", "key", or "units" |
 | help                  | Prints out all available commands |
